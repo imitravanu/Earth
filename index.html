@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth — A World Travel Guide</title>
+<meta name="description" content="Earth is a growing travel guide to the world's best destinations: places to see, food to eat, where to stay and how to get there.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#faf6f0; --card:#fffdf9; --ink:#1b1611; --muted:#6f6357;
+    --line:#e7ddd0; --accent:#b7410e; --accent-ink:#93350b;
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Inter",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ---------- header ---------- */
+  .site-head{position:sticky;top:0;z-index:40;background:rgba(250,246,240,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .site-head-in{max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .wordmark{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.02em;text-decoration:none}
+  .wordmark em{font-style:normal;color:var(--accent)}
+  .head-nav{display:flex;align-items:center;gap:20px;font-size:14px;font-weight:600}
+  .head-nav a{text-decoration:none;color:var(--muted)}
+  .head-nav a:hover{color:var(--ink)}
+  .count-badge{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;white-space:nowrap}
+  @media(max-width:640px){.head-nav a{display:none}.count-badge{font-size:12px}}
+
+  /* ---------- hero ---------- */
+  .hero{max-width:1200px;margin:0 auto;padding:64px 20px 28px}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:18px}
+  .hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(44px,7vw,84px);line-height:1.02;letter-spacing:-.015em;max-width:14ch}
+  .hero h1 i{font-style:italic;font-weight:500;color:var(--accent-ink)}
+  .hero p.lede{margin-top:20px;font-size:clamp(17px,2.2vw,20px);line-height:1.6;color:var(--muted);max-width:56ch}
+  .search-row{display:flex;gap:10px;margin-top:30px;max-width:640px}
+  .search-row input{flex:1;padding:15px 18px;font-size:16px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);color:var(--ink);outline:none}
+  .search-row input:focus{border-color:var(--accent)}
+  .btn-surprise{border:1.5px solid var(--ink);background:var(--ink);color:#fff;border-radius:14px;padding:0 20px;font-size:15px;font-weight:600;white-space:nowrap}
+  .btn-surprise:hover{background:#000}
+  .stats{display:flex;flex-wrap:wrap;gap:28px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)}
+  .stats b{display:block;font-family:var(--serif);font-size:28px;font-weight:600;line-height:1.1}
+  .stats span{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- filters + grid ---------- */
+  .toolbar{max-width:1200px;margin:0 auto;padding:10px 20px 4px;display:flex;flex-wrap:wrap;gap:8px}
+  .pill{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:9px 17px;font-size:14px;font-weight:600;color:var(--muted)}
+  .pill:hover{border-color:var(--ink);color:var(--ink)}
+  .pill.active{background:var(--ink);border-color:var(--ink);color:#fff}
+  .grid{max-width:1200px;margin:0 auto;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  @media(max-width:960px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-align:left;padding:0;transition:transform .25s ease,box-shadow .25s ease;animation:rise .5s ease both}
+  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(27,22,17,.12)}
+  .card figure{aspect-ratio:4/3;overflow:hidden;background:#e9e0d2}
+  .card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+  .card:hover img{transform:scale(1.04)}
+  .card-body{padding:18px 18px 20px}
+  .card-country{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+  .card-body h3{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.15;margin:7px 0 6px}
+  .card-body p{font-size:14.5px;color:var(--muted);line-height:1.55}
+  .card-meta{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;gap:10px}
+  .empty{max-width:1200px;margin:0 auto;padding:30px 20px 50px;color:var(--muted);font-size:17px}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @media(prefers-reduced-motion:reduce){.card{animation:none}.card:hover{transform:none}.card img{transition:none}}
+
+  /* ---------- growing band ---------- */
+  .growing{max-width:1200px;margin:26px auto 0;padding:0 20px 8px}
+  .growing-in{border:1px solid var(--line);border-radius:18px;background:#f3ead9;padding:30px;display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+  @media(max-width:720px){.growing-in{grid-template-columns:1fr}}
+  .growing h2{font-family:var(--serif);font-weight:600;font-size:30px;line-height:1.15}
+  .growing p{color:var(--muted);margin-top:10px;font-size:15.5px;line-height:1.6}
+  .growing .big{font-family:var(--serif);font-size:52px;font-weight:600;line-height:1;color:var(--accent-ink)}
+  .growing .big span{display:block;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+  footer{max-width:1200px;margin:0 auto;padding:34px 20px 48px;color:var(--muted);font-size:13.5px;line-height:1.7}
+  footer b{color:var(--ink)}
+
+  /* ---------- detail overlay ---------- */
+  .overlay{position:fixed;inset:0;z-index:60;background:rgba(20,16,12,.55);display:none;overflow-y:auto;padding:4vh 16px}
+  .overlay.open{display:block}
+  .sheet{max-width:920px;margin:0 auto;background:var(--paper);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+  .sheet-hero{position:relative;aspect-ratio:16/8.2;overflow:hidden;background:#e9e0d2}
+  .sheet-hero img{width:100%;height:100%;object-fit:cover;display:block}
+  .sheet-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(15,11,8,.72),rgba(15,11,8,0) 55%)}
+  .sheet-hero-text{position:absolute;left:28px;right:28px;bottom:22px;z-index:2;color:#fff}
+  .sheet-hero-text .c{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;opacity:.9}
+  .sheet-hero-text h2{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5.5vw,52px);line-height:1.05;margin-top:6px}
+  .sheet-close{position:absolute;top:16px;right:16px;z-index:3;width:42px;height:42px;border-radius:50%;border:none;background:rgba(255,255,255,.94);font-size:19px;line-height:1;color:#1b1611}
+  .sheet-body{padding:28px}
+  .sheet-body .desc{font-size:17.5px;line-height:1.7;max-width:62ch}
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+  @media(max-width:640px){.info-grid{grid-template-columns:1fr}}
+  .info{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  .info h4{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .info ul{list-style:none}
+  .info li{padding:6px 0;border-bottom:1px solid var(--line);font-size:15px}
+  .info li:last-child{border-bottom:none}
+  .info p{font-size:15px;line-height:1.6;color:#3d352c}
+  .sheet-nav{display:flex;justify-content:space-between;gap:12px;margin-top:26px;padding-top:20px;border-top:1px solid var(--line)}
+  .sheet-nav button{border:1.5px solid var(--ink);background:transparent;border-radius:999px;padding:11px 20px;font-size:14px;font-weight:700}
+  .sheet-nav button:hover{background:var(--ink);color:#fff}
+  .hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<header class="site-head">
+  <div class="site-head-in">
+    <a class="wordmark" href="#">Earth</a>
+    <nav class="head-nav">
+      <a href="#destinations">Destinations</a>
+      <a href="#growing">About</a>
+      <span class="count-badge" id="headCount">20 places · 13 countries</span>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <p class="eyebrow">A growing guide to the world</p>
+  <h1>Every country. Every city. <i>One Earth.</i></h1>
+  <p class="lede">The best places on Earth, gathered in one place — what to see, what to eat, where to stay, and how to get there. This guide starts with twenty destinations and keeps growing until it covers the whole world.</p>
+  <div class="search-row">
+    <input id="search" type="search" placeholder="Search a city, a country, or a dish — try “Kyoto” or “pasta”…" aria-label="Search destinations">
+    <button class="btn-surprise" id="surprise" type="button">Surprise me</button>
+  </div>
+  <div class="stats">
+    <div><b id="statPlaces">20</b><span>Destinations</span></div>
+    <div><b id="statCountries">13</b><span>Countries</span></div>
+    <div><b id="statRegions">7</b><span>Regions</span></div>
+    <div><b>1</b><span>Guide, growing daily</span></div>
+  </div>
+</section>
+
+<div class="toolbar" id="filters" role="group" aria-label="Filter by region"></div>
+
+<main id="destinations">
+  <div class="grid" id="grid"></div>
+  <p class="empty hidden" id="empty">No places match that search yet. The guide is still growing — try another city or country.</p>
+</main>
+
+<section class="growing" id="growing">
+  <div class="growing-in">
+    <div>
+      <h2>Built to cover the whole world — one place at a time.</h2>
+      <p>Twenty destinations are live today, each checked with a real photograph and practical notes on food, stays and travel. New cities and countries are added in batches, so the guide gets closer to everywhere, every week. Nothing here is filler: if a place is listed, it is worth the trip.</p>
+    </div>
+    <div>
+      <div class="big"><span id="growCount">20 / 195</span>Countries<br>covered</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <b>Earth.</b> Photography: Unsplash. Travel details change — opening hours, prices and rules can move, so check before you go. Earth is a guide, not a booking site.
+</footer>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Destination details">
+  <div class="sheet">
+    <div class="sheet-hero">
+      <img id="ovImg" src="" alt="">
+      <button class="sheet-close" id="ovClose" type="button" aria-label="Close">✕</button>
+      <div class="sheet-hero-text">
+        <div class="c" id="ovCountry"></div>
+        <h2 id="ovTitle"></h2>
+      </div>
+    </div>
+    <div class="sheet-body">
+      <p class="desc" id="ovDesc"></p>
+      <div class="info-grid">
+        <div class="info"><h4>Must see</h4><ul id="ovSpots"></ul></div>
+        <div class="info"><h4>Eat &amp; drink</h4><ul id="ovFood"></ul></div>
+        <div class="info"><h4>Where to stay</h4><p id="ovStay"></p></div>
+        <div class="info"><h4>Getting there</h4><p id="ovGet"></p></div>
+      </div>
+      <div class="info" style="margin-top:18px"><h4>Best time to go</h4><p id="ovBest"></p></div>
+      <div class="sheet-nav">
+        <button id="ovPrev" type="button">← Previous place</button>
+        <button id="ovNext" type="button">Next place →</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var U = function(id){ return "https://images.unsplash.com/photo-" + id + "?w=1200&q=80&auto=format&fit=crop"; };
+var DESTINATIONS = [
+{ id:"paris", city:"Paris", country:"France", region:"Europe",
+  tag:"The city of light — art, icons and café life on the Seine.",
+  desc:"Paris rewards slow days: a morning at the market, an afternoon in a museum, an evening watching the Eiffel Tower sparkle. It is the most visited city on Earth, and it earns it — grand boulevards, world-class art and food on every corner.",
+  img:U("1502602898657-3e91760cbb34"),
+  spots:["Eiffel Tower at sunset","The Louvre and its glass pyramid","Montmartre and Sacré-Cœur","A Seine river cruise"],
+  food:["Butter croissant from a local boulangerie","French onion soup","Crêpes from a street stand","Escargots in a classic bistro"],
+  stay:"Stay in Le Marais for atmosphere, Saint-Germain for cafés, or the 7th arrondissement to wake up near the Eiffel Tower. The Métro reaches everywhere, so any central base works.",
+  get:"Fly into Charles de Gaulle or Orly, then take the RER or Métro into the city. Inside Paris, walk and ride the Métro — a car is more trouble than it is worth.",
+  best:"April to June and September to October: mild weather, thinner crowds, and long golden evenings." },
+{ id:"agra", city:"Agra", country:"India", region:"Asia",
+  tag:"Home of the Taj Mahal — the world's most famous monument to love.",
+  desc:"Agra holds one of the wonders of the world. The Taj Mahal at sunrise, when the marble shifts from pink to white, is a sight that justifies the whole journey — and the great red sandstone fort across the river tells the other half of the story.",
+  img:U("1564507592333-c60657eea523"),
+  spots:["The Taj Mahal at sunrise","Agra Fort on the Yamuna river","Mehtab Bagh gardens across the river","The marble inlay workshops of the old city"],
+  food:["Petha, Agra's famous sweet","Mughlai curries and kebabs","Bedai with sabzi for breakfast","Chaat in the old city lanes"],
+  stay:"Stay near the Taj East Gate in Tajganj to reach the monument on foot at dawn, or in the cantonment area for quieter hotels.",
+  get:"About 3–4 hours by road from Delhi on the Yamuna Expressway, or by train to Agra Cantt. From the station, autos and taxis reach the Taj in minutes.",
+  best:"November to February, when the days are cool and the haze lifts. Avoid the peak heat of May and June." },
+{ id:"santorini", city:"Santorini", country:"Greece", region:"Europe",
+  tag:"White villages on a volcanic cliff above the bluest sea in Europe.",
+  desc:"A drowned volcano crater filled with the Aegean, ringed by whitewashed villages and blue domes. Oia's sunsets are famous for a reason, but the island's black-sand beaches, ancient ruins and wines are just as good.",
+  img:U("1613395877344-13d4a8e0d49e"),
+  spots:["Oia at sunset","The cliff path from Fira to Oia","Red Beach and its volcanic cliffs","Akrotiri, the buried Minoan town"],
+  food:["Fava bean purée with capers","Tomato keftedes (fritters)","Grilled seafood by the water","Assyrtiko, the island's crisp white wine"],
+  stay:"Oia for caldera views and honeymoon calm, Fira for restaurants and buses, or a beach village like Kamari for swimming and value.",
+  get:"Fly to Santorini (JTR) or take the ferry from Athens' port of Piraeus. On the island, buses connect the main towns and ATVs are a popular way around.",
+  best:"May to June and September to October — warm seas, open tavernas, and far fewer crowds than July and August." },
+{ id:"bali", city:"Bali", country:"Indonesia", region:"Asia",
+  tag:"Temples in the jungle, rice terraces, and surf on every coast.",
+  desc:"Bali is many islands in one: the art and rice fields of Ubud, the surf towns of the south, the temples on the cliffs, and quiet black-sand beaches in the north. Come for the scenery; stay for the warmth of the welcome.",
+  img:U("1537996194471-e657df975ab4"),
+  spots:["Tegalalang rice terraces at dawn","Uluwatu Temple over the sea","Ubud's Monkey Forest and art markets","A sunrise climb of Mount Batur"],
+  food:["Nasi goreng and mie goreng","Babi guling (roast pork)","Sate lilit, Balinese satay","Fresh tropical fruit and coconut"],
+  stay:"Ubud for jungle, temples and rice fields; Seminyak or Canggu for beaches and restaurants; Uluwatu for cliffs and surf.",
+  get:"Fly into Ngurah Rai Airport (Denpasar). Taxis and ride apps cover the island; hire a driver for a full day of temples — it is cheap and far easier than driving yourself.",
+  best:"April to October, the dry season. July and August are busiest; the shoulder months are calmer." },
+{ id:"tokyo", city:"Tokyo", country:"Japan", region:"Asia",
+  tag:"Neon, temples and the best food on Earth, all in one city.",
+  desc:"Tokyo is the largest city on Earth and the easiest to love: impossibly clean, endlessly varied, and delicious at every price. Ancient shrines sit beside neon towers, and a bowl of ramen can be the best meal of your life.",
+  img:U("1540959733332-eab4deabeeaf"),
+  spots:["Shibuya Crossing at night","Senso-ji Temple in Asakusa","Meiji Shrine and its forest","The view from the Tokyo Skytree"],
+  food:["Sushi at a counter restaurant","A bowl of tonkotsu ramen","Tempura, light and crisp","Wagyu beef, cooked your way"],
+  stay:"Shinjuku and Shibuya for energy and transport, Asakusa for old-Tokyo charm, Ginza for comfort. Everywhere is connected by train.",
+  get:"Fly into Haneda (closer) or Narita, then take the train into the city. The JR lines and subway cover everything; get a rechargeable IC card on arrival.",
+  best:"March to May for cherry blossom, October to November for autumn colour and clear skies." },
+{ id:"london", city:"London", country:"United Kingdom", region:"Europe",
+  tag:"Two thousand years of history, and the world's best museums — free.",
+  desc:"London is a city of villages stitched together by the Thames: royal palaces, street markets, grand museums that cost nothing to enter, and pubs that have poured beer for centuries. Few cities reward wandering this well.",
+  img:U("1513635269975-59663e0ac1ad"),
+  spots:["Big Ben and Westminster at dusk","The Tower of London and the Crown Jewels","The British Museum (free)","Borough Market for lunch"],
+  food:["Fish and chips, wrapped in paper","A Sunday roast with Yorkshire pudding","A full English breakfast","Afternoon tea, done properly"],
+  stay:"Covent Garden or South Bank for first-timers, Shoreditch for street art and nightlife, Kensington for museums. The Tube makes anywhere workable.",
+  get:"Fly into Heathrow or Gatwick and take the train or Tube in. The Underground and buses cover the whole city; walking the centre is a pleasure.",
+  best:"May to September for the longest days. December brings Christmas lights and markets; winter is quieter and cheaper." },
+{ id:"rome", city:"Rome", country:"Italy", region:"Europe",
+  tag:"The Eternal City — an open-air museum where every street is history.",
+  desc:"Rome has been a capital for nearly three thousand years, and it shows: the Colosseum, the Forum, the Vatican and a fountain on every square. The food is as old as the stones, and just as good.",
+  img:U("1552832230-c0197dd311b5"),
+  spots:["The Colosseum and the Roman Forum","St Peter's Basilica and the Vatican Museums","The Trevi Fountain at night","Trastevere's lanes for dinner"],
+  food:["Cacio e pepe, Rome's signature pasta","Carbonara, the real thing","Supplì, fried rice balls","Gelato, twice a day"],
+  stay:"The Centro Storico puts you walking distance from everything; Trastevere is prettier and livelier at night. Book the Vatican and Colosseum ahead.",
+  get:"Fly into Fiumicino or Ciampino, then train or bus into the centre. The historic centre is best explored on foot; the metro covers the rest.",
+  best:"April to June and September to October. July and August are hot and crowded; winter is calm and clear." },
+{ id:"newyork", city:"New York", country:"United States", region:"North America",
+  tag:"The city that never sleeps — five boroughs, a thousand worlds.",
+  desc:"New York is the capital of everything at once: finance, theatre, food, art, and eight million people speaking a hundred languages. The skyline is famous, but the real city is at street level.",
+  img:U("1496442226666-8d4d0e62e6e9"),
+  spots:["Central Park in any season","The Statue of Liberty by ferry","The Brooklyn Bridge at sunrise","The Met and the Museum Mile"],
+  food:["A dollar slice of New York pizza","A bagel with lox","Pastrami on rye at a deli","New York cheesecake"],
+  stay:"Midtown for first-timers, Lower Manhattan for character, Brooklyn for neighbourhoods and views. The subway runs all night and goes everywhere.",
+  get:"Fly into JFK or Newark and take the train or subway in. The subway is the fastest way around; taxis and rideshares fill the gaps.",
+  best:"April to June and September to November. December is magical and cold; August is hot and quiet." },
+{ id:"dubai", city:"Dubai", country:"United Arab Emirates", region:"Middle East",
+  tag:"The tallest tower, the biggest mall, and a desert that starts at the edge of town.",
+  desc:"Dubai built the future in the desert in a single generation: the Burj Khalifa, the Palm islands, and malls with ski slopes. Behind the glass there is an older city of souks, dhows and spice smells worth finding.",
+  img:U("1512453979798-5ea266f8880c"),
+  spots:["At The Top — Burj Khalifa's observation deck","The souks of Deira, gold and spice","A desert dune evening with dinner","The Dubai Fountain show at night"],
+  food:["Shawarma from a street shop","Machboos, spiced rice with meat","Luqaimat, sweet dumplings","Arabic mezze with fresh bread"],
+  stay:"Downtown for the Burj and the Fountain, JBR or the Marina for the beach, Deira for the old city and value.",
+  get:"Fly into Dubai International (DXB). The Metro runs the length of the city; taxis are plentiful and metered.",
+  best:"November to March, when the desert is cool and the beaches are perfect. Summer heat is extreme." },
+{ id:"sydney", city:"Sydney", country:"Australia", region:"Oceania",
+  tag:"A harbour city where the beach is a way of life.",
+  desc:"Sydney pairs one of the world's great harbours with a beach culture that starts before work. The Opera House and the Harbour Bridge are the postcards; the coastal walks and harbour ferries are the real joy.",
+  img:U("1506973035872-a4ec16b8e8d9"),
+  spots:["The Opera House and the harbour at dawn","The Bondi to Coogee coastal walk","Climbing the Harbour Bridge","A day trip to the Blue Mountains"],
+  food:["Fish and chips by the water","A classic meat pie","Avocado toast, Sydney's own","Tim Tams, for the flight home"],
+  stay:"The Rocks or the CBD for the harbour, Bondi for the beach, Surry Hills for food and small bars.",
+  get:"Fly into Sydney Airport and take the train into the city in minutes. Ferries cross the harbour; the coastal walk needs only good shoes.",
+  best:"September to November and March to May — warm, clear and less crowded than high summer." },
+];
+
+var FALLBACK_IMG = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect width="800" height="600" fill="%23e9e0d2"/><text x="400" y="305" font-family="Georgia,serif" font-size="36" fill="%236f6357" text-anchor="middle">Earth</text></svg>';
+
+var REGION_ORDER = ["All","Asia","Europe","Africa","North America","South America","Oceania","Middle East"];
+var activeRegion = "All";
+var query = "";
+var currentList = DESTINATIONS.slice();
+
+function unique(list, key){
+  var seen = {}, out = [];
+  list.forEach(function(d){ var v = d[key]; if(!seen[v]){ seen[v]=1; out.push(v); } });
+  return out;
+}
+
+function matches(d){
+  if(activeRegion !== "All" && d.region !== activeRegion) return false;
+  if(!query) return true;
+  var hay = (d.city + " " + d.country + " " + d.region + " " + d.tag + " " + d.desc + " " + d.spots.join(" ") + " " + d.food.join(" ")).toLowerCase();
+  return query.split(/\s+/).every(function(w){ return hay.indexOf(w) !== -1; });
+}
+
+function renderFilters(){
+  var box = document.getElementById("filters");
+  box.innerHTML = "";
+  REGION_ORDER.forEach(function(r){
+    var n = r === "All" ? DESTINATIONS.length : DESTINATIONS.filter(function(d){ return d.region === r; }).length;
+    if(r !== "All" && n === 0) return;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "pill" + (r === activeRegion ? " active" : "");
+    b.textContent = r + " · " + n;
+    b.addEventListener("click", function(){ activeRegion = r; renderFilters(); renderGrid(); });
+    box.appendChild(b);
+  });
+}
+
+function cardHTML(d, i){
+  return '<article class="card" data-i="' + i + '" style="animation-delay:' + Math.min(i*40, 320) + 'ms">' +
+    '<figure><img src="' + d.img + '" alt="' + d.city + ', ' + d.country + '" loading="lazy" onerror="this.onerror=null;this.src=FALLBACK_IMG"></figure>' +
+    '<div class="card-body">' +
+    '<div class="card-country">' + d.country + ' · ' + d.region + '</div>' +
+    '<h3>' + d.city + '</h3><p>' + d.tag + '</p>' +
+    '<div class="card-meta"><span>' + d.spots.length + ' must-see places</span><span>Best: ' + d.best.split(":")[0] + '</span></div>' +
+    '</div></article>';
+}
+
+function renderGrid(){
+  currentList = DESTINATIONS.filter(matches);
+  var grid = document.getElementById("grid");
+  grid.innerHTML = currentList.map(cardHTML).join("");
+  document.getElementById("empty").classList.toggle("hidden", currentList.length > 0);
+  var cards = grid.querySelectorAll(".card");
+  cards.forEach(function(c){
+    c.addEventListener("click", function(){ openOverlay(parseInt(c.getAttribute("data-i"), 10)); });
+  });
+}
+
+function updateCounts(){
+  var countries = unique(DESTINATIONS, "country").length;
+  var regions = unique(DESTINATIONS, "region").length;
+  document.getElementById("headCount").textContent = DESTINATIONS.length + " places · " + countries + " countries";
+  document.getElementById("statPlaces").textContent = DESTINATIONS.length;
+  document.getElementById("statCountries").textContent = countries;
+  document.getElementById("statRegions").textContent = regions;
+  document.getElementById("growCount").textContent = DESTINATIONS.length + " / 195";
+}
+
+/* ---------- detail overlay ---------- */
+var ovIndex = 0;
+function openOverlay(i){
+  ovIndex = i;
+  var d = currentList[i];
+  if(!d) return;
+  document.getElementById("ovImg").src = d.img;
+  document.getElementById("ovImg").alt = d.city + ", " + d.country;
+  document.getElementById("ovImg").onerror = function(){ this.onerror = null; this.src = FALLBACK_IMG; };
+  document.getElementById("ovCountry").textContent = d.country + " · " + d.region;
+  document.getElementById("ovTitle").textContent = d.city;
+  document.getElementById("ovDesc").textContent = d.desc;
+  document.getElementById("ovSpots").innerHTML = d.spots.map(function(s){ return "<li>" + s + "</li>"; }).join("");
+  document.getElementById("ovFood").innerHTML = d.food.map(function(s){ return "<li>" + s + "</li>"; }).join("");
+  document.getElementById("ovStay").textContent = d.stay;
+  document.getElementById("ovGet").textContent = d.get;
+  document.getElementById("ovBest").textContent = d.best;
+  document.getElementById("overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeOverlay(){
+  document.getElementById("overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+function stepOverlay(dir){
+  if(!currentList.length) return;
+  ovIndex = (ovIndex + dir + currentList.length) % currentList.length;
+  openOverlay(ovIndex);
+}
+document.getElementById("ovClose").addEventListener("click", closeOverlay);
+document.getElementById("ovPrev").addEventListener("click", function(){ stepOverlay(-1); });
+document.getElementById("ovNext").addEventListener("click", function(){ stepOverlay(1); });
+document.getElementById("overlay").addEventListener("click", function(e){ if(e.target === this) closeOverlay(); });
+document.addEventListener("keydown", function(e){ if(e.key === "Escape") closeOverlay(); });
+
+/* ---------- search + surprise ---------- */
+document.getElementById("search").addEventListener("input", function(e){
+  query = e.target.value.toLowerCase().trim();
+  renderGrid();
+});
+document.getElementById("surprise").addEventListener("click", function(){
+  var pool = DESTINATIONS.filter(matches);
+  if(!pool.length) pool = DESTINATIONS;
+  var pick = pool[Math.floor(Math.random() * pool.length)];
+  currentList = pool;
+  openOverlay(pool.indexOf(pick));
+});
+
+renderFilters();
+renderGrid();
+updateCounts();
+</script>
+</body>
+</html>
